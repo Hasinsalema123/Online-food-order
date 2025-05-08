@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Food - Food Delivery App</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#FF6B35',secondary:'#38B2AC'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+min-height: 100vh;
+padding-bottom: 72px;
+background-color: #FAFAFA;
+}
+.category-scroll::-webkit-scrollbar {
+display: none;
+}
+.offers-scroll::-webkit-scrollbar {
+display: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.custom-shadow {
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+</style>
+</head>
+<body>
+<!-- Header Section -->
+<header class="fixed top-0 left-0 right-0 bg-white z-50 custom-shadow">
+<div class="px-4 py-3 flex items-center justify-between">
+<div class="flex items-center">
+<h1 class="text-xl font-['Pacifico'] text-primary">Best Food</h1>
+</div>
+<div class="relative flex-1 mx-4 max-w-md">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3">
+<div class="w-5 h-5 flex items-center justify-center text-gray-500">
+<i class="ri-search-line"></i>
+</div>
+</div>
+<input type="text" class="w-full h-10 pl-10 pr-4 text-sm bg-gray-100 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Search for food or restaurants...">
+</div>
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200">
+<i class="ri-user-line text-gray-700"></i>
+</div>
+<div class="relative w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200">
+<i class="ri-shopping-cart-line text-gray-700"></i>
+<span class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-primary text-white text-xs font-bold rounded-full">3</span>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-16 pb-4">
+<!-- Featured Banner -->
+<section class="px-4 mt-4">
+<div class="relative w-full h-48 rounded-lg overflow-hidden">
+<div style="background-image: url('https://readdy.ai/api/search-image?query=delicious%20gourmet%20burger%20with%20melted%20cheese%2C%20crispy%20fries%2C%20and%20fresh%20vegetables%20on%20a%20wooden%20board%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20blurred%20restaurant%20background%2C%20appetizing%2C%20high-resolution%20detail&width=800&height=400&seq=1&orientation=landscape'); background-size: cover; background-position: center;" class="absolute inset-0"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent flex flex-col justify-center px-6">
+<h2 class="text-white text-2xl font-bold mb-2">Summer Special</h2>
+<p class="text-white text-sm mb-4">Get 25% off on selected items this week!</p>
+<button id="orderNowBtn" class="bg-primary text-white px-6 py-2 rounded-button font-medium w-max whitespace-nowrap hover:bg-opacity-90">Order Now</button>
+</div>
+</div>
+</section>
+<!-- Category Navigation -->
+<section class="mt-6">
+<div class="px-4 mb-3">
+<h2 class="text-lg font-semibold text-gray-800">Categories</h2>
+</div>
+<div class="category-scroll overflow-x-auto flex space-x-4 px-4 pb-2 -mx-4">
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="pizza">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-primary">
+<i class="ri-pizza-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-800">Pizza</span>
+</div>
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="burger">
+<div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-hamburger-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-600">Burger</span>
+</div>
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="sushi">
+<div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-restaurant-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-600">Sushi</span>
+</div>
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="dessert">
+<div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-cake-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-600">Dessert</span>
+</div>
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="drinks">
+<div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-cup-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-600">Drinks</span>
+</div>
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="noodles">
+<div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-bowl-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-600">Noodles</span>
+</div>
+<div class="flex flex-col items-center cursor-pointer category-item" data-category="salad">
+<div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-1">
+<div class="w-8 h-8 flex items-center justify-center text-gray-700">
+<i class="ri-salad-line"></i>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-600">Salad</span>
+</div>
+</div>
+</section>
+<!-- Popular Items Section -->
+<section class="mt-6">
+<div class="px-4 mb-3 flex justify-between items-center">
+<h2 class="text-lg font-semibold text-gray-800">Popular Items</h2>
+<a href="#" class="text-sm text-primary font-medium">View All</a>
+</div>
+<div class="px-4 grid grid-cols-2 gap-4">
+<!-- Item 1 -->
+<div class="bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-32 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=delicious%20margherita%20pizza%20with%20melted%20mozzarella%20cheese%2C%20fresh%20basil%20leaves%2C%20and%20tomato%20sauce%20on%20a%20wooden%20serving%20board%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=2&orientation=landscape" alt="Margherita Pizza" class="w-full h-full object-cover object-top">
+<div class="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-semibold text-primary">
+4.8 <i class="ri-star-fill ml-1"></i>
+</div>
+</div>
+<div class="p-3">
+<p class="text-xs text-gray-500 mb-1">Italian Delights</p>
+<h3 class="text-sm font-semibold text-gray-800 mb-1">Margherita Pizza</h3>
+<div class="flex justify-between items-center">
+<p class="text-primary font-semibold">$12.99</p>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full !rounded-button whitespace-nowrap">
+<i class="ri-add-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-32 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=gourmet%20beef%20burger%20with%20lettuce%2C%20tomato%2C%20cheese%2C%20and%20special%20sauce%20on%20a%20brioche%20bun%2C%20served%20with%20crispy%20fries%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=3&orientation=landscape" alt="Classic Burger" class="w-full h-full object-cover object-top">
+<div class="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-semibold text-primary">
+4.7 <i class="ri-star-fill ml-1"></i>
+</div>
+</div>
+<div class="p-3">
+<p class="text-xs text-gray-500 mb-1">Burger House</p>
+<h3 class="text-sm font-semibold text-gray-800 mb-1">Classic Burger</h3>
+<div class="flex justify-between items-center">
+<p class="text-primary font-semibold">$9.99</p>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full !rounded-button whitespace-nowrap">
+<i class="ri-add-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-32 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=assorted%20sushi%20platter%20with%20salmon%2C%20tuna%2C%20and%20avocado%20rolls%2C%20served%20with%20wasabi%2C%20ginger%2C%20and%20soy%20sauce%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=4&orientation=landscape" alt="Sushi Platter" class="w-full h-full object-cover object-top">
+<div class="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-semibold text-primary">
+4.9 <i class="ri-star-fill ml-1"></i>
+</div>
+</div>
+<div class="p-3">
+<p class="text-xs text-gray-500 mb-1">Tokyo Sushi</p>
+<h3 class="text-sm font-semibold text-gray-800 mb-1">Sushi Platter</h3>
+<div class="flex justify-between items-center">
+<p class="text-primary font-semibold">$18.50</p>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full !rounded-button whitespace-nowrap">
+<i class="ri-add-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-32 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=fresh%20green%20salad%20with%20grilled%20chicken%2C%20avocado%2C%20cherry%20tomatoes%2C%20and%20balsamic%20dressing%20in%20a%20white%20bowl%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=5&orientation=landscape" alt="Chicken Salad" class="w-full h-full object-cover object-top">
+<div class="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-semibold text-primary">
+4.6 <i class="ri-star-fill ml-1"></i>
+</div>
+</div>
+<div class="p-3">
+<p class="text-xs text-gray-500 mb-1">Fresh & Healthy</p>
+<h3 class="text-sm font-semibold text-gray-800 mb-1">Chicken Salad</h3>
+<div class="flex justify-between items-center">
+<p class="text-primary font-semibold">$11.25</p>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full !rounded-button whitespace-nowrap">
+<i class="ri-add-line"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Special Offers -->
+<section class="mt-6">
+<div class="px-4 mb-3">
+<h2 class="text-lg font-semibold text-gray-800">Special Offers</h2>
+</div>
+<div class="offers-scroll overflow-x-auto flex space-x-4 px-4 pb-2 -mx-4">
+<!-- Offer 1 -->
+<div class="min-w-[280px] bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-36">
+<img src="https://readdy.ai/api/search-image?query=delicious%20family-sized%20pizza%20with%20various%20toppings%20including%20pepperoni%2C%20mushrooms%2C%20and%20bell%20peppers%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=400&height=250&seq=6&orientation=landscape" alt="Family Pizza Deal" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 left-3 bg-primary text-white font-bold text-lg px-3 py-1 rounded-full">
+30% OFF
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-1">Family Pizza Deal</h3>
+<p class="text-sm text-gray-600 mb-2">Get 30% off on family-sized pizzas every Tuesday</p>
+<p class="text-xs text-gray-500">Valid until May 31, 2025</p>
+</div>
+</div>
+<!-- Offer 2 -->
+<div class="min-w-[280px] bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-36">
+<img src="https://readdy.ai/api/search-image?query=two%20gourmet%20burgers%20with%20fries%20and%20soft%20drinks%20on%20a%20wooden%20table%2C%20buy%20one%20get%20one%20free%20promotion%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=400&height=250&seq=7&orientation=landscape" alt="BOGO Burger" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 left-3 bg-primary text-white font-bold text-lg px-3 py-1 rounded-full">
+BOGO
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-1">Buy 1 Get 1 Free</h3>
+<p class="text-sm text-gray-600 mb-2">Buy one burger and get another one free</p>
+<p class="text-xs text-gray-500">Valid until May 15, 2025</p>
+</div>
+</div>
+<!-- Offer 3 -->
+<div class="min-w-[280px] bg-white rounded-lg overflow-hidden custom-shadow">
+<div class="relative h-36">
+<img src="https://readdy.ai/api/search-image?query=assorted%20desserts%20including%20chocolate%20cake%2C%20ice%20cream%2C%20and%20cheesecake%20on%20elegant%20plates%2C%20dessert%20special%20promotion%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=400&height=250&seq=8&orientation=landscape" alt="Dessert Special" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 left-3 bg-primary text-white font-bold text-lg px-3 py-1 rounded-full">
+25% OFF
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-1">Sweet Treats</h3>
+<p class="text-sm text-gray-600 mb-2">25% off on all desserts after 7 PM</p>
+<p class="text-xs text-gray-500">Valid until June 15, 2025</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div class="bg-white rounded-lg w-[90%] max-w-md overflow-hidden relative">
+<div class="p-4 border-b">
+<h2 class="text-xl font-semibold text-gray-800">Your Cart</h2>
+<button id="closeCartModal" class="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<div class="max-h-[60vh] overflow-y-auto p-4" id="cartItems">
+<div class="text-center text-gray-500 py-8">Your cart is empty</div>
+</div>
+<div class="p-4 border-t bg-white">
+<div class="flex justify-between items-center mb-4">
+<span class="text-gray-600">Total Amount</span>
+<span class="text-xl font-semibold text-primary" id="cartTotal">$0.00</span>
+</div>
+<button id="placeOrderBtn" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+Place Order
+</button>
+</div>
+</div>
+</div>
+
+<div id="orderSuccessModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div class="bg-white rounded-lg w-[90%] max-w-md p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+<i class="ri-check-line text-3xl text-green-500"></i>
+</div>
+<h2 class="text-2xl font-semibold text-gray-800 mb-2">Order Placed!</h2>
+<p class="text-gray-600 mb-6">Your order has been successfully placed. You can track the delivery in the Orders section.</p>
+<button id="closeSuccessModal" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90">
+Continue Shopping
+</button>
+</div>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+<div class="flex justify-around items-center h-16">
+<a href="#" class="nav-item flex flex-col items-center justify-center w-full h-full text-primary" data-page="home">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-fill"></i>
+</div>
+<span class="text-xs mt-1 font-medium">Home</span>
+</a>
+<a href="#" class="nav-item flex flex-col items-center justify-center w-full h-full text-gray-500" data-page="search">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-search-line"></i>
+</div>
+<span class="text-xs mt-1">Search</span>
+</a>
+<a href="#" class="nav-item flex flex-col items-center justify-center w-full h-full text-gray-500" data-page="orders">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-file-list-line"></i>
+</div>
+<span class="text-xs mt-1">Orders</span>
+</a>
+<a href="#" class="nav-item flex flex-col items-center justify-center w-full h-full text-gray-500" data-page="profile">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+<span class="text-xs mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Sign Up Modal -->
+<div id="signUpModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div class="bg-white rounded-lg w-[90%] max-w-md p-6 relative">
+<button id="closeModal" class="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+<h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Account</h2>
+<form id="signUpForm" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+<input type="text" name="fullName" required class="w-full px-4 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" placeholder="Enter your full name">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+<input type="email" name="email" required class="w-full px-4 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" placeholder="Enter your email">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+<input type="password" name="password" required class="w-full px-4 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" placeholder="Create a password">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+<input type="tel" name="phone" required class="w-full px-4 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" placeholder="Enter your phone number">
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 !rounded-button whitespace-nowrap">Create Account</button>
+<p class="text-center text-sm text-gray-600">
+Already have an account?
+<a href="#" class="text-primary font-medium">Sign In</a>
+</p>
+</form>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const modal = document.getElementById('signUpModal');
+const cartModal = document.getElementById('cartModal');
+const orderSuccessModal = document.getElementById('orderSuccessModal');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const placeOrderBtn = document.getElementById('placeOrderBtn');
+const closeCartModal = document.getElementById('closeCartModal');
+const closeSuccessModal = document.getElementById('closeSuccessModal');
+const navItems = document.querySelectorAll('.nav-item');
+
+let cart = [];
+
+function updateCart() {
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<div class="text-center text-gray-500 py-8">Your cart is empty</div>';
+    placeOrderBtn.disabled = true;
+    return;
+  }
+
+  let total = 0;
+  cartItems.innerHTML = cart.map(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    return `
+      <div class="flex items-center justify-between mb-4 pb-4 border-b last:border-b-0">
+        <div class="flex items-center flex-1">
+          <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover">
+          <div class="ml-3 flex-1">
+            <h3 class="text-sm font-semibold text-gray-800">${item.name}</h3>
+            <p class="text-xs text-gray-500">${item.restaurant}</p>
+            <p class="text-sm font-medium text-primary">$${item.price.toFixed(2)}</p>
+          </div>
+        </div>
+        <div class="flex items-center ml-4">
+          <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary cart-quantity-btn" data-action="decrease" data-index="${cart.indexOf(item)}">
+            <i class="ri-subtract-line"></i>
+          </button>
+          <span class="w-8 text-center font-medium">${item.quantity}</span>
+          <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary cart-quantity-btn" data-action="increase" data-index="${cart.indexOf(item)}">
+            <i class="ri-add-line"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  cartTotal.textContent = `$${total.toFixed(2)}`;
+  placeOrderBtn.disabled = false;
+
+  const cartCount = document.querySelector('.ri-shopping-cart-line + span');
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCount.textContent = totalItems;
+}
+
+document.querySelector('.ri-shopping-cart-line').parentElement.addEventListener('click', () => {
+  cartModal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+});
+
+closeCartModal.addEventListener('click', () => {
+  cartModal.classList.add('hidden');
+  document.body.style.overflow = 'auto';
+});
+
+cartModal.addEventListener('click', (e) => {
+  if (e.target === cartModal) {
+    cartModal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const quantityBtn = e.target.closest('.cart-quantity-btn');
+  if (quantityBtn) {
+    const index = parseInt(quantityBtn.dataset.index);
+    const action = quantityBtn.dataset.action;
+    
+    if (action === 'increase') {
+      cart[index].quantity = Math.min(cart[index].quantity + 1, 10);
+    } else {
+      cart[index].quantity = Math.max(cart[index].quantity - 1, 0);
+      if (cart[index].quantity === 0) {
+        cart.splice(index, 1);
+      }
+    }
+    
+    updateCart();
+  }
+});
+
+placeOrderBtn.addEventListener('click', () => {
+  cartModal.classList.add('hidden');
+  orderSuccessModal.classList.remove('hidden');
+  cart = [];
+  updateCart();
+});
+
+closeSuccessModal.addEventListener('click', () => {
+  orderSuccessModal.classList.add('hidden');
+  document.body.style.overflow = 'auto';
+});
+
+orderSuccessModal.addEventListener('click', (e) => {
+  if (e.target === orderSuccessModal) {
+    orderSuccessModal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
+});
+function createFoodDetailModal(item) {
+return `
+<div id="foodDetailModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<div class="bg-white rounded-lg w-[90%] max-w-md overflow-hidden relative">
+<button id="closeFoodModal" class="absolute right-4 top-4 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full text-gray-500 hover:text-gray-700 shadow-lg">
+<i class="ri-close-line"></i>
+</button>
+<div class="h-56 relative">
+<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+<div class="absolute top-4 left-4 bg-white rounded-full px-3 py-1 text-sm font-semibold text-primary">
+${item.rating} <i class="ri-star-fill ml-1"></i>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-xl font-semibold text-gray-800">${item.name}</h2>
+<p class="text-gray-500">${item.restaurant}</p>
+</div>
+<p class="text-xl font-semibold text-primary">${item.price}</p>
+</div>
+<div class="mb-6">
+<h3 class="font-medium text-gray-800 mb-2">Description</h3>
+<p class="text-gray-600 text-sm leading-relaxed">
+${item.description || 'A delicious dish prepared with the finest ingredients, carefully seasoned and cooked to perfection. Served fresh and hot, guaranteed to satisfy your cravings.'}
+</p>
+</div>
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center border rounded-full">
+<button class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary quantity-btn" data-action="decrease">
+<i class="ri-subtract-line"></i>
+</button>
+<span class="w-10 h-10 flex items-center justify-center font-medium quantity-value">1</span>
+<button class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary quantity-btn" data-action="increase">
+<i class="ri-add-line"></i>
+</button>
+</div>
+<div class="text-right">
+<p class="text-sm text-gray-500">Total Amount</p>
+<p class="text-lg font-semibold text-primary total-price">${item.price}</p>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 order-now-btn">
+Order Now
+</button>
+</div>
+</div>
+</div>
+`;
+}
+const mainContent = document.querySelector('main');
+function createSearchContent() {
+return `
+<div class="pt-16 pb-4 min-h-screen bg-white">
+<div class="px-4 py-3">
+<div class="relative flex items-center">
+<div class="absolute left-3 text-gray-500">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-search-line"></i>
+</div>
+</div>
+<input type="text" class="w-full h-12 pl-10 pr-4 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Search for food, restaurants...">
+</div>
+<div class="mt-6">
+<h2 class="text-lg font-semibold text-gray-800 mb-4">Popular Searches</h2>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">Pizza</button>
+<button class="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">Burger</button>
+<button class="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">Sushi</button>
+<button class="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">Italian</button>
+<button class="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">Chinese</button>
+<button class="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">Desserts</button>
+</div>
+</div>
+<div class="mt-8">
+<h2 class="text-lg font-semibold text-gray-800 mb-4">Recent Searches</h2>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-history-line"></i>
+</div>
+<span class="ml-3 text-gray-700">Margherita Pizza</span>
+</div>
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700">
+<i class="ri-close-line"></i>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-history-line"></i>
+</div>
+<span class="ml-3 text-gray-700">Sushi Restaurant</span>
+</div>
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700">
+<i class="ri-close-line"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+`;
+}
+function createOrdersContent() {
+return `
+<div class="pt-16 pb-4 min-h-screen bg-white">
+<div class="px-4 py-3">
+<h1 class="text-xl font-semibold text-gray-800 mb-4">My Orders</h1>
+<div class="space-y-4">
+<div class="bg-white rounded-lg p-4 custom-shadow">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=delicious%20margherita%20pizza%20with%20melted%20mozzarella%20cheese%20and%20fresh%20basil%20on%20wooden%20board%2C%20professional%20food%20photography&width=100&height=100&seq=21&orientation=squarish" class="w-full h-full object-cover" alt="Pizza">
+</div>
+<div class="ml-3">
+<h3 class="font-semibold text-gray-800">Italian Delights</h3>
+<p class="text-sm text-gray-500">Order #123456</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Delivered</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">April 30, 2025 • 2 items</span>
+<span class="font-semibold text-gray-800">$25.98</span>
+</div>
+</div>
+<div class="bg-white rounded-lg p-4 custom-shadow">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=gourmet%20burger%20with%20fries%20on%20rustic%20wooden%20table%2C%20professional%20food%20photography&width=100&height=100&seq=22&orientation=squarish" class="w-full h-full object-cover" alt="Burger">
+</div>
+<div class="ml-3">
+<h3 class="font-semibold text-gray-800">Burger House</h3>
+<p class="text-sm text-gray-500">Order #123457</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">On the way</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">April 30, 2025 • 1 item</span>
+<span class="font-semibold text-gray-800">$12.99</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+`;
+}
+function createProfileContent() {
+return `
+<div class="pt-16 pb-4 min-h-screen bg-white">
+<div class="px-4 py-3">
+<div class="flex items-center mb-6">
+<div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
+<i class="ri-user-3-line text-4xl text-gray-400"></i>
+</div>
+<div class="ml-4">
+<h1 class="text-xl font-semibold text-gray-800">John Anderson</h1>
+<p class="text-gray-500">+1 (555) 123-4567</p>
+</div>
+</div>
+<div class="space-y-4">
+<a href="#" class="flex items-center justify-between p-4 bg-white rounded-lg custom-shadow">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-user-settings-line text-primary"></i>
+</div>
+<span class="ml-3 text-gray-800">Edit Profile</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</a>
+<a href="#" class="flex items-center justify-between p-4 bg-white rounded-lg custom-shadow">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-map-pin-line text-primary"></i>
+</div>
+<span class="ml-3 text-gray-800">Saved Addresses</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</a>
+<a href="#" class="flex items-center justify-between p-4 bg-white rounded-lg custom-shadow">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-notification-line text-primary"></i>
+</div>
+<span class="ml-3 text-gray-800">Notifications</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</a>
+<a href="#" class="flex items-center justify-between p-4 bg-white rounded-lg custom-shadow">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full">
+<i class="ri-settings-line text-primary"></i>
+</div>
+<span class="ml-3 text-gray-800">Settings</span>
+</div>
+<i class="ri-arrow-right-s-line text-gray-400"></i>
+</a>
+<button class="flex items-center justify-between p-4 bg-white rounded-lg custom-shadow w-full">
+<div class="flex items-center">
+<div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">
+<i class="ri-logout-box-line text-red-600"></i>
+</div>
+<span class="ml-3 text-red-600">Log Out</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+`;
+}
+const originalContent = mainContent.innerHTML;
+navItems.forEach(item => {
+item.addEventListener('click', (e) => {
+e.preventDefault();
+navItems.forEach(navItem => {
+navItem.classList.remove('text-primary');
+navItem.classList.add('text-gray-500');
+navItem.querySelector('i').className = navItem.querySelector('i').className.replace('-fill', '-line');
+navItem.querySelector('span').classList.remove('font-medium');
+});
+item.classList.remove('text-gray-500');
+item.classList.add('text-primary');
+item.querySelector('i').className = item.querySelector('i').className.replace('-line', '-fill');
+item.querySelector('span').classList.add('font-medium');
+const page = item.getAttribute('data-page');
+switch(page) {
+case 'home':
+mainContent.innerHTML = originalContent;
+break;
+case 'search':
+mainContent.innerHTML = createSearchContent();
+break;
+case 'orders':
+mainContent.innerHTML = createOrdersContent();
+break;
+case 'profile':
+mainContent.innerHTML = createProfileContent();
+break;
+}
+});
+});
+const categoryItems = {
+pizza: [
+{
+name: "Margherita Pizza",
+restaurant: "Italian Delights",
+price: "$12.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=delicious%20margherita%20pizza%20with%20melted%20mozzarella%20cheese%2C%20fresh%20basil%20leaves%2C%20and%20tomato%20sauce%20on%20a%20wooden%20serving%20board%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=2&orientation=landscape"
+},
+{
+name: "Pepperoni Pizza",
+restaurant: "Pizza Palace",
+price: "$14.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=pepperoni%20pizza%20with%20extra%20cheese%20and%20crispy%20crust%2C%20served%20on%20rustic%20wooden%20board%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=9&orientation=landscape"
+},
+{
+name: "BBQ Chicken Pizza",
+restaurant: "Pizza Express",
+price: "$15.99",
+rating: "4.6",
+image: "https://readdy.ai/api/search-image?query=bbq%20chicken%20pizza%20with%20red%20onions%2C%20cilantro%2C%20and%20melted%20cheese%20on%20thin%20crust%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=31&orientation=landscape"
+},
+{
+name: "Quattro Formaggi",
+restaurant: "Italian Delights",
+price: "$16.99",
+rating: "4.9",
+image: "https://readdy.ai/api/search-image?query=four%20cheese%20pizza%20with%20gorgonzola%2C%20mozzarella%2C%20parmesan%2C%20and%20fontina%20on%20thin%20crust%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=32&orientation=landscape"
+}
+],
+burger: [
+{
+name: "Classic Burger",
+restaurant: "Burger House",
+price: "$9.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=gourmet%20beef%20burger%20with%20lettuce%2C%20tomato%2C%20cheese%2C%20and%20special%20sauce%20on%20a%20brioche%20bun%2C%20served%20with%20crispy%20fries%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=3&orientation=landscape"
+},
+{
+name: "Cheese Burger Deluxe",
+restaurant: "Burger Joint",
+price: "$11.99",
+rating: "4.6",
+image: "https://readdy.ai/api/search-image?query=deluxe%20cheeseburger%20with%20double%20patty%2C%20melted%20cheddar%2C%20caramelized%20onions%2C%20and%20bacon%20on%20artisanal%20bun%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=10&orientation=landscape"
+},
+{
+name: "Mushroom Swiss Burger",
+restaurant: "Gourmet Burgers",
+price: "$13.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=gourmet%20mushroom%20swiss%20burger%20with%20saut%C3%A9ed%20mushrooms%20and%20melted%20swiss%20cheese%20on%20pretzel%20bun%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=33&orientation=landscape"
+},
+{
+name: "Veggie Burger",
+restaurant: "Green Bites",
+price: "$10.99",
+rating: "4.5",
+image: "https://readdy.ai/api/search-image?query=homemade%20veggie%20burger%20with%20quinoa%20patty%2C%20avocado%2C%20sprouts%2C%20and%20chipotle%20mayo%20on%20whole%20grain%20bun%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=34&orientation=landscape"
+}
+],
+sushi: [
+{
+name: "Salmon Roll Set",
+restaurant: "Tokyo Sushi",
+price: "$18.50",
+rating: "4.9",
+image: "https://readdy.ai/api/search-image?query=fresh%20salmon%20sushi%20rolls%20with%20avocado%20and%20cucumber%2C%20served%20with%20wasabi%20and%20pickled%20ginger%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=11&orientation=landscape"
+},
+{
+name: "Dragon Roll",
+restaurant: "Sushi Master",
+price: "$16.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=dragon%20roll%20sushi%20with%20eel%2C%20avocado%2C%20and%20special%20sauce%2C%20beautifully%20plated%20on%20black%20stone%20plate%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=12&orientation=landscape"
+},
+{
+name: "Rainbow Roll",
+restaurant: "Ocean Sushi",
+price: "$19.99",
+rating: "4.9",
+image: "https://readdy.ai/api/search-image?query=colorful%20rainbow%20roll%20sushi%20with%20tuna%2C%20salmon%2C%20yellowtail%2C%20and%20avocado%20on%20top%2C%20served%20on%20modern%20black%20plate%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=35&orientation=landscape"
+},
+{
+name: "Spicy Tuna Roll",
+restaurant: "Sushi Express",
+price: "$15.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=spicy%20tuna%20roll%20with%20sesame%20seeds%20and%20green%20onions%2C%20served%20with%20spicy%20mayo%20sauce%20on%20elegant%20plate%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=36&orientation=landscape"
+}
+],
+dessert: [
+{
+name: "Chocolate Cake",
+restaurant: "Sweet Dreams",
+price: "$8.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=rich%20chocolate%20layer%20cake%20with%20ganache%20frosting%20and%20fresh%20berries%2C%20served%20on%20elegant%20white%20plate%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=13&orientation=landscape"
+},
+{
+name: "Crème Brûlée",
+restaurant: "French Delicacies",
+price: "$7.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=classic%20cr%C3%A8me%20br%C3%BBl%C3%A9e%20with%20caramelized%20sugar%20top%20and%20fresh%20mint%20garnish%2C%20served%20in%20white%20ramekin%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=14&orientation=landscape"
+},
+{
+name: "Tiramisu",
+restaurant: "Italian Treats",
+price: "$8.50",
+rating: "4.9",
+image: "https://readdy.ai/api/search-image?query=classic%20tiramisu%20with%20layers%20of%20coffee-soaked%20ladyfingers%20and%20mascarpone%20cream%2C%20dusted%20with%20cocoa%20powder%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=37&orientation=landscape"
+},
+{
+name: "New York Cheesecake",
+restaurant: "Sweet Corner",
+price: "$9.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=classic%20new%20york%20cheesecake%20with%20fresh%20strawberry%20topping%20and%20whipped%20cream%2C%20served%20on%20elegant%20dessert%20plate%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=38&orientation=landscape"
+}
+],
+drinks: [
+{
+name: "Fruit Smoothie",
+restaurant: "Fresh & Healthy",
+price: "$5.99",
+rating: "4.6",
+image: "https://readdy.ai/api/search-image?query=colorful%20fruit%20smoothie%20with%20fresh%20berries%20and%20mint%20garnish%2C%20served%20in%20clear%20glass%20with%20eco-friendly%20straw%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=15&orientation=landscape"
+},
+{
+name: "Iced Latte",
+restaurant: "Coffee House",
+price: "$4.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=iced%20latte%20with%20caramel%20drizzle%20and%20whipped%20cream%2C%20served%20in%20tall%20glass%20with%20artistic%20latte%20art%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=16&orientation=landscape"
+},
+{
+name: "Matcha Green Tea",
+restaurant: "Tea House",
+price: "$5.50",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=traditional%20matcha%20green%20tea%20latte%20with%20artistic%20foam%20art%2C%20served%20in%20ceramic%20cup%20with%20bamboo%20whisk%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=39&orientation=landscape"
+},
+{
+name: "Fresh Mojito",
+restaurant: "Juice Bar",
+price: "$6.99",
+rating: "4.9",
+image: "https://readdy.ai/api/search-image?query=refreshing%20mojito%20cocktail%20with%20fresh%20mint%20leaves%2C%20lime%2C%20and%20crushed%20ice%2C%20served%20in%20tall%20glass%20with%20garnish%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=40&orientation=landscape"
+}
+],
+noodles: [
+{
+name: "Ramen Bowl",
+restaurant: "Noodle House",
+price: "$13.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=steaming%20hot%20ramen%20bowl%20with%20chashu%20pork%2C%20soft%20boiled%20egg%2C%20and%20green%20onions%20in%20rich%20broth%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=17&orientation=landscape"
+},
+{
+name: "Pad Thai",
+restaurant: "Thai Kitchen",
+price: "$12.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=authentic%20pad%20thai%20with%20shrimp%2C%20crushed%20peanuts%2C%20and%20lime%20wedge%2C%20served%20on%20traditional%20plate%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=18&orientation=landscape"
+},
+{
+name: "Udon Stir Fry",
+restaurant: "Japanese Kitchen",
+price: "$14.99",
+rating: "4.6",
+image: "https://readdy.ai/api/search-image?query=stir-fried%20udon%20noodles%20with%20vegetables%20and%20beef%20in%20teriyaki%20sauce%2C%20garnished%20with%20sesame%20seeds%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=41&orientation=landscape"
+},
+{
+name: "Pho Bowl",
+restaurant: "Vietnamese Cuisine",
+price: "$13.50",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=traditional%20vietnamese%20pho%20with%20rice%20noodles%2C%20beef%20slices%2C%20bean%20sprouts%2C%20and%20herbs%20in%20aromatic%20broth%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=42&orientation=landscape"
+}
+],
+salad: [
+{
+name: "Caesar Salad",
+restaurant: "Fresh & Healthy",
+price: "$10.99",
+rating: "4.6",
+image: "https://readdy.ai/api/search-image?query=classic%20caesar%20salad%20with%20grilled%20chicken%2C%20parmesan%20cheese%2C%20and%20homemade%20croutons%2C%20served%20in%20white%20bowl%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=19&orientation=landscape"
+},
+{
+name: "Greek Salad",
+restaurant: "Mediterranean",
+price: "$11.99",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=fresh%20greek%20salad%20with%20feta%20cheese%2C%20olives%2C%20cucumber%2C%20and%20red%20onions%20with%20olive%20oil%20dressing%2C%20served%20in%20rustic%20bowl%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=20&orientation=landscape"
+},
+{
+name: "Quinoa Bowl",
+restaurant: "Healthy Bites",
+price: "$12.99",
+rating: "4.8",
+image: "https://readdy.ai/api/search-image?query=colorful%20quinoa%20bowl%20with%20roasted%20vegetables%2C%20avocado%2C%20chickpeas%2C%20and%20tahini%20dressing%2C%20served%20in%20ceramic%20bowl%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=43&orientation=landscape"
+},
+{
+name: "Asian Chicken Salad",
+restaurant: "Fusion Kitchen",
+price: "$13.50",
+rating: "4.7",
+image: "https://readdy.ai/api/search-image?query=asian-inspired%20chicken%20salad%20with%20mandarin%20oranges%2C%20crispy%20wontons%2C%20and%20sesame%20ginger%20dressing%20on%20bed%20of%20mixed%20greens%2C%20professional%20food%20photography%20with%20soft%20natural%20lighting%2C%20clean%20white%20background%2C%20appetizing%2C%20high-resolution%20detail&width=300&height=200&seq=44&orientation=landscape"
+}
+]
+};
+function updateCategoryUI(category) {
+const categoryButtons = document.querySelectorAll('.category-item');
+categoryButtons.forEach(button => {
+const isSelected = button.dataset.category === category;
+button.querySelector('div').classList.toggle('bg-primary/10', isSelected);
+button.querySelector('div div').classList.toggle('text-primary', isSelected);
+button.querySelector('span').classList.toggle('text-gray-800', isSelected);
+button.querySelector('span').classList.toggle('text-gray-600', !isSelected);
+});
+const itemsContainer = document.querySelector('.grid');
+const items = categoryItems[category] || [];
+itemsContainer.innerHTML = items.map(item => `
+<div class="bg-white rounded-lg overflow-hidden custom-shadow cursor-pointer food-item" data-item='${JSON.stringify(item)}'>
+<div class="relative h-32 overflow-hidden">
+<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover object-top">
+<div class="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-semibold text-primary">
+${item.rating} <i class="ri-star-fill ml-1"></i>
+</div>
+</div>
+<div class="p-3">
+<p class="text-xs text-gray-500 mb-1">${item.restaurant}</p>
+<h3 class="text-sm font-semibold text-gray-800 mb-1">${item.name}</h3>
+<div class="flex justify-between items-center">
+<p class="text-primary font-semibold">${item.price}</p>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full !rounded-button whitespace-nowrap">
+<i class="ri-add-line"></i>
+</button>
+</div>
+</div>
+</div>
+`).join('');
+}
+document.querySelectorAll('.category-item').forEach(item => {
+item.addEventListener('click', () => {
+const category = item.dataset.category;
+updateCategoryUI(category);
+});
+});
+const orderNowBtn = document.getElementById('orderNowBtn');
+const closeModal = document.getElementById('closeModal');
+const signUpForm = document.getElementById('signUpForm');
+orderNowBtn.addEventListener('click', () => {
+modal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+closeModal.addEventListener('click', () => {
+modal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+modal.addEventListener('click', (e) => {
+if (e.target === modal) {
+modal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+});
+signUpForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const formData = new FormData(signUpForm);
+const data = Object.fromEntries(formData);
+console.log('Form submitted:', data);
+// Here you can add your API call to create the account
+modal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+});
+// Food item click handler
+document.addEventListener('click', function(e) {
+const foodItem = e.target.closest('.food-item');
+if (foodItem) {
+const item = JSON.parse(foodItem.dataset.item);
+document.body.insertAdjacentHTML('beforeend', createFoodDetailModal(item));
+const foodModal = document.getElementById('foodDetailModal');
+const closeBtn = document.getElementById('closeFoodModal');
+const quantityBtns = foodModal.querySelectorAll('.quantity-btn');
+const quantityValue = foodModal.querySelector('.quantity-value');
+const totalPrice = foodModal.querySelector('.total-price');
+const orderNowBtn = foodModal.querySelector('.order-now-btn');
+let quantity = 1;
+const basePrice = parseFloat(item.price.replace('$', ''));
+quantityBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+const action = btn.dataset.action;
+if (action === 'increase') {
+quantity = Math.min(quantity + 1, 10);
+} else {
+quantity = Math.max(quantity - 1, 1);
+}
+quantityValue.textContent = quantity;
+totalPrice.textContent = `$${(basePrice * quantity).toFixed(2)}`;
+});
+});
+orderNowBtn.addEventListener('click', () => {
+  const itemPrice = parseFloat(item.price.replace('$', ''));
+  const cartItem = {
+    ...item,
+    price: itemPrice,
+    quantity: quantity
+  };
+  
+  const existingItemIndex = cart.findIndex(i => i.name === item.name);
+  if (existingItemIndex !== -1) {
+    cart[existingItemIndex].quantity = Math.min(cart[existingItemIndex].quantity + quantity, 10);
+  } else {
+    cart.push(cartItem);
+  }
+  
+  updateCart();
+  foodModal.remove();
+  document.body.style.overflow = 'auto';
+});
+closeBtn.addEventListener('click', () => {
+foodModal.remove();
+document.body.style.overflow = 'auto';
+});
+foodModal.addEventListener('click', (e) => {
+if (e.target === foodModal) {
+foodModal.remove();
+document.body.style.overflow = 'auto';
+}
+});
+document.body.style.overflow = 'hidden';
+}
+});
+// Add to cart functionality
+document.addEventListener('click', function(e) {
+  const addButton = e.target.closest('.ri-add-line');
+  if (addButton) {
+    const foodItem = addButton.closest('.food-item');
+    if (foodItem) {
+      const item = JSON.parse(foodItem.dataset.item);
+      const itemPrice = parseFloat(item.price.replace('$', ''));
+      const cartItem = {
+        ...item,
+        price: itemPrice,
+        quantity: 1
+      };
+      
+      const existingItemIndex = cart.findIndex(i => i.name === item.name);
+      if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity = Math.min(cart[existingItemIndex].quantity + 1, 10);
+      } else {
+        cart.push(cartItem);
+      }
+      
+      updateCart();
+    }
+  }
+});
+});
+</script>
+</body>
+</html>
